@@ -1,0 +1,16 @@
+{
+    "collection": "@nestjs/schematics",
+    "sourceRoot": "src",
+    "monorepo": true,
+    "root": "src",
+    "compilerOptions": {
+      "webpack": true
+    },
+    "projects": {
+        "api": {
+            "type": "application",
+            "root": "src",
+            "entryFile": "main"
+        }
+    }
+}
