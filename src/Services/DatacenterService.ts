@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { CompanyDao } from "src/Daos/CompanyDao";
 import { DatacenterDao } from "src/Daos/DatacenterDao";
 import { DatacenterTypesDao } from "src/Daos/DatacenterTypesDao";
 import { UserDao } from "src/Daos/UserDao";
@@ -17,6 +18,7 @@ export class DatacenterService {
         private readonly _datacenterDao: DatacenterDao,
         private readonly _datacenterTypesDao: DatacenterTypesDao,
         private readonly _userDao: UserDao,
+        private readonly _companyDao: CompanyDao,
         private readonly _jwtSecurityService: JwtSecurityService
     ) { }
 
@@ -25,6 +27,8 @@ export class DatacenterService {
         if (!isValidToken) throw new HttpCustomException('Invalid token', StatusCodeEnums.INVALID_TOKEN);
         const user = await this._userDao.getUserByUuid(isValidToken.uuid);
         if (!user) throw new HttpCustomException('User not found', StatusCodeEnums.USER_NOT_FOUND);
+        const findCompany = await this._companyDao.findByUserUuid(user.getUuid());
+        if (!findCompany) throw new HttpCustomException('Company not found', StatusCodeEnums.COMPANY_NOT_FOUND);
         const findUserDatacenter = await this._datacenterDao.findByUserId(user);
         if (findUserDatacenter) throw new HttpCustomException('User already has a datacenter', StatusCodeEnums.USER_HAS_DATACENTER);
         const datacenterType: DatacenterTypes = await this._datacenterTypesDao.findTypeById(data.type);

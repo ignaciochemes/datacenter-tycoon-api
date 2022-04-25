@@ -11,6 +11,7 @@ enum StatusCodeEnums {
     INVALID_TOKEN = 10020,
 
     COMPANY_DUPLICATED = 20001,
+    COMPANY_NOT_FOUND,
 
     INVALID_CPU = 30001,
     INVALID_RAM,
@@ -28,6 +29,7 @@ const StatusCodeExceptionText: EnumDictionary<StatusCodeEnums, string> = {
     [StatusCodeEnums.INVALID_PASSWORD]: 'INVALID_PASSWORD',
     [StatusCodeEnums.INVALID_TOKEN]: 'INVALID_TOKEN',
     [StatusCodeEnums.COMPANY_DUPLICATED]: 'COMPANY_DUPLICATED',
+    [StatusCodeEnums.COMPANY_NOT_FOUND]: 'COMPANY_NOT_FOUND',
     [StatusCodeEnums.INVALID_CPU]: 'INVALID_CPU',
     [StatusCodeEnums.INVALID_RAM]: 'INVALID_RAM',
     [StatusCodeEnums.INVALID_STORAGE]: 'INVALID_STORAGE',

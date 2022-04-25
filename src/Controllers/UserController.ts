@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Put } from "@nestjs/common";
 import { HeaderRequired } from "src/Helpers/Decorators/HeaderRequiredDecorator";
 import Response from "src/Helpers/Formatter/Response";
+import ChangePasswordRequest from "src/Models/Request/UserController/ChangePasswordRequest";
 import CreateUserRequest from "src/Models/Request/UserController/CreateUserRequest";
 import CreateUserResponse from "src/Models/Response/UserController/CreateUserResponse";
 import LoginResponse from "src/Models/Response/UserController/LoginUserResponse";
@@ -34,6 +35,16 @@ export class UserController {
         @HeaderRequired('access-token') token: string
     ): Promise<Response<any>> {
         const response = await this._userService.getUserByUuid(token);
+        return Response.create<any>(response);
+    }
+
+    @Put()
+    @HttpCode(HttpStatus.OK)
+    async changePassword(
+        @HeaderRequired('access-token') token: string,
+        @Body() body: ChangePasswordRequest
+    ): Promise<Response<any>> {
+        const response = await this._userService.changePassword(token, body);
         return Response.create<any>(response);
     }
 
