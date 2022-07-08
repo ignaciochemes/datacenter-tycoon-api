@@ -7,6 +7,7 @@ export default class GetCompanyByUserIdResponse {
     public description: string;
     public registrationDate: Date;
     public active: boolean;
+    public balance: number;
 
     constructor(owner: User, company: Company) {
         this.owner = owner.getUuid();
@@ -14,6 +15,7 @@ export default class GetCompanyByUserIdResponse {
         this.description = company.getDescription();
         this.registrationDate = company.getRegistrationDate();
         this.active = company.isActive();
+        this.balance = company.getBalance();
     }
 
 }

@@ -20,6 +20,8 @@ enum StatusCodeEnums {
     DATACENTER_TYPE_NOT_FOUND = 40001,
     USER_HAS_DATACENTER,
     USER_HAS_NO_DATACENTER,
+
+    MAX_RACKS_REACHED = 50001,
 }
 
 const StatusCodeExceptionText: EnumDictionary<StatusCodeEnums, string> = {
@@ -36,6 +38,7 @@ const StatusCodeExceptionText: EnumDictionary<StatusCodeEnums, string> = {
     [StatusCodeEnums.DATACENTER_TYPE_NOT_FOUND]: 'DATACENTER_TYPE_NOT_FOUND',
     [StatusCodeEnums.USER_HAS_DATACENTER]: 'USER_HAS_DATACENTER',
     [StatusCodeEnums.USER_HAS_NO_DATACENTER]: 'USER_HAS_NO_DATACENTER',
+    [StatusCodeEnums.MAX_RACKS_REACHED]: 'MAX_RACKS_REACHED',
 };
 
 export { StatusCodeEnums, StatusCodeExceptionText };

@@ -17,6 +17,9 @@ export class Company extends GenericEntity {
     @Column({ type: 'datetime', nullable: true, name: 'registration_date' })
     public registrationDate: Date;
 
+    @Column({ default: 1500, nullable: true })
+    public balance: number;
+
     @Column({ default: false })
     public active: boolean;
 
@@ -50,6 +53,14 @@ export class Company extends GenericEntity {
 
     public setRegistrationDate(registrationDate: Date): void {
         this.registrationDate = registrationDate;
+    }
+
+    public getBalance(): number {
+        return this.balance;
+    }
+
+    public setBalance(balance: number): void {
+        this.balance = balance;
     }
 
     public isActive(): boolean {
