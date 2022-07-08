@@ -11,6 +11,8 @@ import UtilityFunctions from "src/Helpers/Utilities/UtilityFunctions";
 import { StatusCodeEnums } from "src/Enums/StatusCodeEnums";
 import { JwtSecurityService } from "./Security/JwtSecurityService";
 import LoginResponse from "src/Models/Response/UserController/LoginUserResponse";
+import ChangePasswordRequest from "src/Models/Request/UserController/ChangePasswordRequest";
+import IdResponse from "src/Models/Response/IdResponse";
 
 @Injectable()
 export class UserService {
@@ -52,5 +54,15 @@ export class UserService {
         if (user.getUuid() !== isValidToken.uuid) throw new HttpCustomException('Invalid token', StatusCodeEnums.INVALID_TOKEN);
         if (isValidToken.rol !== user.getRol().getId()) throw new HttpCustomException('Invalid token', StatusCodeEnums.INVALID_TOKEN);
         return user;
+    }
+
+    async changePassword(token: string, data: ChangePasswordRequest): Promise<IdResponse> {
+        const user: User = await this.getUserByUuid(token);
+        if (!user) throw new HttpCustomException('User not found', StatusCodeEnums.USER_NOT_FOUND);
+        const userPassword = await UtilityFunctions.getEncryptCompare(data.oldPassword, user.getPassword());
+        if (userPassword === false) throw new HttpCustomException('The old password is invalid', StatusCodeEnums.INVALID_PASSWORD);
+        user.setPassword(await UtilityFunctions.getEncryptData(data.newPassword));
+        await this._userDao.save(user);
+        return new IdResponse(user.getId());
     }
 }

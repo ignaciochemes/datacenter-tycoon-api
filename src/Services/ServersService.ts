@@ -76,9 +76,6 @@ export class ServersService {
         if (!storage) throw new HttpCustomException('Invalid storage', StatusCodeEnums.INVALID_STORAGE);
 
         let newServer = new Servers();
-        newServer.setName(data.name);
-        newServer.setDescription(data.description);
-        newServer.setPrice(data.price);
         newServer.setCpu(cpu);
         newServer.setRam(ram);
         newServer.setStorage(storage);
@@ -130,4 +127,5 @@ export class ServersService {
         await this._storageDao.save(newStorage);
         return newStorage;
     }
+
 }
