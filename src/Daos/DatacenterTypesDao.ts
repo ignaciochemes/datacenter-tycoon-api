@@ -8,6 +8,9 @@ export class DatacenterTypesDao {
     constructor(@InjectRepository(DatacenterTypes) private _datacenterTypesRepository: Repository<DatacenterTypes>) { }
 
     async findTypeById(id: number): Promise<DatacenterTypes> {
-        return await this._datacenterTypesRepository.findOne({ id: id });
+        const query: DatacenterTypes = await this._datacenterTypesRepository.createQueryBuilder("datacenterTypes")
+            .where("datacenterTypes.id = :id", { id: id })
+            .getOne();
+        return query;
     }
 }

@@ -13,7 +13,10 @@ export class DatacenterDao {
     }
 
     async findTypeById(id: number): Promise<Datacenter> {
-        return await this._datacenterRepository.findOne({ id: id });
+        const query: Datacenter = await this._datacenterRepository.createQueryBuilder("datacenter")
+            .where("datacenter.id = :id", { id: id })
+            .getOne();
+        return query;
     }
 
     async findByUserId(user: User): Promise<Datacenter> {

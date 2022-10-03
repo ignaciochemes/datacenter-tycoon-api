@@ -12,7 +12,10 @@ export class RamDao {
     }
 
     async findById(id: number): Promise<Ram> {
-        return await this._ramRepository.findOne({ id: id });
+        const query: Ram = await this._ramRepository.createQueryBuilder("ram")
+            .where("ram.id = :id", { id: id })
+            .getOne();
+        return query;
     }
 
     async find(): Promise<Ram[]> {
