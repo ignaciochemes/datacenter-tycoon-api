@@ -1,4 +1,4 @@
-export interface DbConfigInterface {
+export interface DBConfigInterface {
     host: string;
     port: number;
     username: string;

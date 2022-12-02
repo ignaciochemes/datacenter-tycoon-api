@@ -12,7 +12,10 @@ export class StorageDao {
     }
 
     async findById(id: number): Promise<Storage> {
-        return await this._storageRepository.findOne({ id: id });
+        const query = this._storageRepository.createQueryBuilder('storage')
+            .where('storage.id = :id', { id: id })
+            .getOne();
+        return await query;
     }
 
     async find(): Promise<Storage[]> {

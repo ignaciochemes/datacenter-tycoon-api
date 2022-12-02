@@ -4,7 +4,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { envFilePathConfiguration } from "./Configs/EnvFilePathConfig";
 import { nestEnvConfiguration } from "./Configs/NestEnvConfig";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { DbConfigInterface } from "./Configs/DbConfigInterface";
+import { DBConfigInterface } from "./Configs/DbConfigInterface";
 
 @Module({
     imports: [
@@ -17,7 +17,7 @@ import { DbConfigInterface } from "./Configs/DbConfigInterface";
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: async (configService: ConfigService) =>
-                Object.assign(configService.get<DbConfigInterface>('DATABASE')),
+                Object.assign(configService.get<DBConfigInterface>('DATABASE')),
         }),
         ApplicationModule
     ],

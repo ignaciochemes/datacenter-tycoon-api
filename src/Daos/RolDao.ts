@@ -8,7 +8,10 @@ export class RolDao {
     constructor(@InjectRepository(Rol) private _rolRepository: Repository<Rol>) { }
 
     async getRolById(id: number): Promise<Rol> {
-        return await this._rolRepository.findOne(id);
+        const query = this._rolRepository.createQueryBuilder("rol")
+            .where("rol.id = :id", { id: id })
+            .getOne();
+        return await query;
     }
 
 }

@@ -1,10 +1,14 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { GenericEntity } from "./GenericTable";
 import { User } from './UserEntity';
 
 @Entity()
 export class Company extends GenericEntity {
-    @OneToOne(() => User, { primary: true })
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @OneToOne(() => User)
     @JoinColumn({ name: "user_id" })
     public userId: User;
 
