@@ -5,16 +5,18 @@ const path = require('path');
 const NestEnvConfiguration = require('./src/Configs/NestEnvConfig');
 const EnvConfiguration = require("./src/Configs/EnvFilePathConfig");
 
-let envData = Dotenv.config({ path: `${path.join(process.env.PWD)}/${EnvConfiguration.envFilePathConfiguration()}` }).parsed
-console.log(`\u001b[36mTYPEORM ENVIRONMENT: ${process.env.ETCT}\nDATABASE CONNECTION: ${process.env.PG_HOST}\u001b[39m`);
 let envs;
-if (process.env.API_VALIDATOR_ENV === 'dev' || process.env.ETCT === 'prod') {
-    envs = NestEnvConfiguration.envModelTransformer(process.env);
-} else {
+
+if (process.env.DTCT === "local") {
+    let envData = Dotenv.config({ path: `${path.join(process.env.PWD)}/${EnvConfiguration.envFilePathConfiguration()}` }).parsed;
+    console.log(`\u001b[36mTYPEORM ENVIRONMENT: ${process.env.DTCT}\nDATABASE CONNECTION: ${process.env.DATABASE_HOST}\u001b[39m`);
     envs = NestEnvConfiguration.envModelTransformer(envData);
+} else {
+    console.log(`\u001b[36mTYPEORM ENVIRONMENT: ${process.env.DTCT}\nDATABASE CONNECTION: ${process.env.DATABASE_HOST}\u001b[39m`);
+    envs = NestEnvConfiguration.envModelTransformer(process.env);
 }
 
-export const connectionSource: any = new DataSource({
+export const connectionSource = new DataSource({
     migrationsTableName: 'migrations',
     type: envs.DATABASE.type,
     host: envs.DATABASE.host,

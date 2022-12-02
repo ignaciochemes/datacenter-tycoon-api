@@ -16,6 +16,6 @@ async function bootstrap() {
     app.use(BodyParser.urlencoded({ extended: true }))
     app.setGlobalPrefix('ms-dtct-api');
     await app.listen(configService.get('PORT') || 30000);
-    console.log(`Listen to port: ` + configService.get('PORT'));
+    console.log(`\u001b[36mAPP NAME: ${configService.get('APP_NAME')} \n Listen to port: ` + configService.get('PORT'));
 }
 bootstrap();

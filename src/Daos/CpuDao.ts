@@ -12,7 +12,10 @@ export class CpuDao {
     }
 
     async findById(id: number): Promise<Cpu> {
-        return await this._cpuRepository.findOne({ id: id });
+        const query = this._cpuRepository.createQueryBuilder('cpu')
+            .where('cpu.id = :id', { id: id })
+            .getOne();
+        return await query;
     }
 
     async find(): Promise<Cpu[]> {

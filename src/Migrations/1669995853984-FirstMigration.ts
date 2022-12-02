@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class FirstMigration1664832979061 implements MigrationInterface {
-    name = 'FirstMigration1664832979061'
+export class FirstMigration1669995853984 implements MigrationInterface {
+    name = 'FirstMigration1669995853984'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE \`rol\` (\`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(), \`update_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`delete_at\` datetime NULL, \`id\` int NOT NULL AUTO_INCREMENT, \`description\` varchar(100) NOT NULL, \`enable\` tinyint NOT NULL DEFAULT 1, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`user\` (\`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(), \`update_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`delete_at\` datetime NULL, \`id\` int NOT NULL AUTO_INCREMENT, \`email\` varchar(255) NULL, \`password\` varchar(255) NOT NULL, \`uuid\` varchar(255) NOT NULL, \`rol_id\` int NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`company\` (\`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(), \`update_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`delete_at\` datetime NULL, \`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NULL, \`description\` varchar(255) NULL, \`registration_date\` datetime NULL, \`balance\` int NULL DEFAULT '1500', \`active\` tinyint NOT NULL DEFAULT 0, \`user_id\` int NULL, UNIQUE INDEX \`REL_879141ebc259b4c0544b3f1ea4\` (\`user_id\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
-        await queryRunner.query(`CREATE TABLE \`cpu\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`description\` varchar(255) NOT NULL, \`price\` int NOT NULL, \`cores\` int NOT NULL, \`threads\` int NOT NULL, \`mhz\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`datacenter_types\` (\`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(), \`update_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`delete_at\` datetime NULL, \`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`ubication\` varchar(255) NOT NULL, \`price\` int NOT NULL, \`max_power\` int NOT NULL, \`max_bandwidth\` int NOT NULL, \`max_racks\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`datacenter\` (\`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(), \`update_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`delete_at\` datetime NULL, \`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`description\` varchar(255) NOT NULL, \`user_id\` int NULL, \`datacenter_type_id\` int NULL, UNIQUE INDEX \`REL_4a7b85c328ae789791ff97d4db\` (\`user_id\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        await queryRunner.query(`CREATE TABLE \`cpu\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`description\` varchar(255) NOT NULL, \`price\` int NOT NULL, \`cores\` int NOT NULL, \`threads\` int NOT NULL, \`mhz\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`rack\` (\`created_at\` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP(), \`update_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`delete_at\` datetime NULL, \`id\` int NOT NULL AUTO_INCREMENT, \`uuid\` varchar(255) NULL, \`maxServers\` int NULL DEFAULT '15', \`usedServers\` int NULL DEFAULT '0', \`bandwidthUsage\` int NULL DEFAULT '0', \`dedicatedBandwidth\` int NULL DEFAULT '0', \`sharedBandwidth\` int NULL DEFAULT '0', \`totalBandwidth\` int NULL DEFAULT '0', \`dedicatedBandwidthUsage\` int NULL DEFAULT '0', \`sharedBandwidthUsage\` int NULL DEFAULT '0', \`totalBandwidthUsage\` int NULL DEFAULT '0', \`freeSharedBandwidth\` int NULL DEFAULT '0', \`freeDedicatedBandwidth\` int NULL DEFAULT '0', \`freeTotalBandwidth\` int NULL DEFAULT '0', \`user_id\` int NULL, \`datacenter_id\` int NULL, UNIQUE INDEX \`REL_5c8ec2dd2961d44dcfbc05e9b4\` (\`user_id\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`ram\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`description\` varchar(255) NOT NULL, \`price\` int NOT NULL, \`capacity\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
         await queryRunner.query(`CREATE TABLE \`storage\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`description\` varchar(255) NOT NULL, \`price\` int NOT NULL, \`capacity\` int NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
@@ -46,10 +46,10 @@ export class FirstMigration1664832979061 implements MigrationInterface {
         await queryRunner.query(`DROP TABLE \`ram\``);
         await queryRunner.query(`DROP INDEX \`REL_5c8ec2dd2961d44dcfbc05e9b4\` ON \`rack\``);
         await queryRunner.query(`DROP TABLE \`rack\``);
+        await queryRunner.query(`DROP TABLE \`cpu\``);
         await queryRunner.query(`DROP INDEX \`REL_4a7b85c328ae789791ff97d4db\` ON \`datacenter\``);
         await queryRunner.query(`DROP TABLE \`datacenter\``);
         await queryRunner.query(`DROP TABLE \`datacenter_types\``);
-        await queryRunner.query(`DROP TABLE \`cpu\``);
         await queryRunner.query(`DROP INDEX \`REL_879141ebc259b4c0544b3f1ea4\` ON \`company\``);
         await queryRunner.query(`DROP TABLE \`company\``);
         await queryRunner.query(`DROP TABLE \`user\``);

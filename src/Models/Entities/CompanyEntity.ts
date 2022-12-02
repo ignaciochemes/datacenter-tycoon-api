@@ -4,6 +4,7 @@ import { User } from './UserEntity';
 
 @Entity()
 export class Company extends GenericEntity {
+
     @PrimaryGeneratedColumn()
     public id: number;
 

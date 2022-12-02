@@ -4,9 +4,10 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { envFilePathConfiguration } from "./Configs/EnvFilePathConfig";
 import { nestEnvConfiguration } from "./Configs/NestEnvConfig";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { DbConfigInterface } from "./Configs/DbConfigInterface";
+
 import { APP_FILTER } from "@nestjs/core";
 import { QueryFailedErrorFilter } from "./Helpers/Middlewares/QueryFailedErrorFilter";
+import { DBConfigInterface } from "./Configs/DbConfigInterface";
 
 @Module({
     imports: [
@@ -19,7 +20,7 @@ import { QueryFailedErrorFilter } from "./Helpers/Middlewares/QueryFailedErrorFi
             imports: [ConfigModule],
             inject: [ConfigService],
             useFactory: async (configService: ConfigService) =>
-                Object.assign(configService.get<DbConfigInterface>('DATABASE')),
+                Object.assign(configService.get<DBConfigInterface>('DATABASE')),
         }),
         ApplicationModule
     ],
