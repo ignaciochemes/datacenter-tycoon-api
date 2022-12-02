@@ -6,7 +6,7 @@ import { User } from './UserEntity';
 export class Company extends GenericEntity {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    public id: number;
 
     @OneToOne(() => User)
     @JoinColumn({ name: "user_id" })
