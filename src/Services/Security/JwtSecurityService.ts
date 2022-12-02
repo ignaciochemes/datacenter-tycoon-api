@@ -24,6 +24,7 @@ export class JwtSecurityService {
         try {
             return this._jwtService.verify(token.split(' ')[1], { secret: process.env.JWT_PRIVATE_KEY });
         } catch (error) {
+            console.log(error);
             return null;
         }
     }

@@ -1,10 +1,14 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { GenericEntity } from "./GenericTable";
 import { User } from './UserEntity';
 
 @Entity()
 export class Company extends GenericEntity {
-    @OneToOne(() => User, { primary: true })
+
+    @PrimaryGeneratedColumn()
+    public id: number;
+
+    @OneToOne(() => User)
     @JoinColumn({ name: "user_id" })
     public userId: User;
 
@@ -16,6 +20,9 @@ export class Company extends GenericEntity {
 
     @Column({ type: 'datetime', nullable: true, name: 'registration_date' })
     public registrationDate: Date;
+
+    @Column({ default: 1500, nullable: true })
+    public balance: number;
 
     @Column({ default: false })
     public active: boolean;
@@ -50,6 +57,14 @@ export class Company extends GenericEntity {
 
     public setRegistrationDate(registrationDate: Date): void {
         this.registrationDate = registrationDate;
+    }
+
+    public getBalance(): number {
+        return this.balance;
+    }
+
+    public setBalance(balance: number): void {
+        this.balance = balance;
     }
 
     public isActive(): boolean {

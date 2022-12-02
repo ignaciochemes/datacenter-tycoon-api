@@ -2,6 +2,7 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post } from "@nestj
 import { HeaderRequired } from "src/Helpers/Decorators/HeaderRequiredDecorator";
 import Response from "src/Helpers/Formatter/Response";
 import CreateCompanyRequest from "src/Models/Request/CompanyController/CreateCompanyRequest";
+import GetCompanyByUserIdResponse from "src/Models/Response/CompanyController/GetCompanyByUserIdResponse";
 import IdResponse from "src/Models/Response/IdResponse";
 import { CompanyService } from "src/Services/CompanyService";
 
@@ -24,8 +25,8 @@ export class CompanyController {
     async getCompanyByUuid(
         @Param('uuid') uuid: string,
         @HeaderRequired('access-token') token: string
-    ): Promise<Response<any>> {
+    ): Promise<Response<GetCompanyByUserIdResponse>> {
         const response = await this._companyService.getCompanyByUserId(token, uuid);
-        return Response.create<any>(response);
+        return Response.create<GetCompanyByUserIdResponse>(response);
     }
 }

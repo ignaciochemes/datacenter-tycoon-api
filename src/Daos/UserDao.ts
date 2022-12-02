@@ -12,7 +12,10 @@ export class UserDao {
     }
 
     async findById(id: number): Promise<User> {
-        return await this._userRepository.findOne(id);
+        const query = this._userRepository.createQueryBuilder("user")
+            .leftJoinAndSelect("user.rol", "rol")
+            .where("user.id = :id", { id: id });
+        return await query.getOne();
     }
 
     async getUserByEmail(email: string): Promise<User> {
