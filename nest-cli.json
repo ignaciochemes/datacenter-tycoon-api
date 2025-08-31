@@ -4,7 +4,7 @@
     "monorepo": true,
     "root": "src",
     "compilerOptions": {
-      "webpack": true
+        "webpack": true
     },
     "projects": {
         "api": {

@@ -1,20 +1,24 @@
-import { DataSource } from "typeorm";
+import { DataSource } from 'typeorm';
 
-const Dotenv = require('dotenv');
-const path = require('path');
-const NestEnvConfiguration = require('./src/Configs/NestEnvConfig');
-const EnvConfiguration = require("./src/Configs/EnvFilePathConfig");
+import * as Dotenv from 'dotenv';
+import * as path from 'path';
+import * as logger from 'better-console-log-plus';
+import { envModelTransformer } from './src/Configs/NestEnvConfig';
+import { envFilePathConfiguration } from './src/Configs/EnvFilePathConfig';
 
-let envs;
+const basePath =
+    process.platform === 'win32'
+        ? process.cwd()
+        : process.env.PWD || process.cwd();
 
-if (process.env.DTCT === "local") {
-    let envData = Dotenv.config({ path: `${path.join(process.env.PWD)}/${EnvConfiguration.envFilePathConfiguration()}` }).parsed;
-    console.log(`\u001b[36mTYPEORM ENVIRONMENT: ${process.env.DTCT}\nDATABASE CONNECTION: ${process.env.DATABASE_HOST}\u001b[39m`);
-    envs = NestEnvConfiguration.envModelTransformer(envData);
-} else {
-    console.log(`\u001b[36mTYPEORM ENVIRONMENT: ${process.env.DTCT}\nDATABASE CONNECTION: ${process.env.DATABASE_HOST}\u001b[39m`);
-    envs = NestEnvConfiguration.envModelTransformer(process.env);
-}
+logger.info(`Base path: ${basePath}`);
+const envData = Dotenv.config({
+    path: path.join(basePath, envFilePathConfiguration()),
+}).parsed;
+
+logger.info(`DATABASE CONNECTION: ${process.env.DATABASE_HOST}`);
+
+const envs = envModelTransformer(envData);
 
 export const connectionSource = new DataSource({
     migrationsTableName: 'migrations',
@@ -26,6 +30,11 @@ export const connectionSource = new DataSource({
     database: envs.DATABASE.database,
     logging: false,
     synchronize: envs.DATABASE.synchronize,
-    migrations: ["src/Migrations/**/*.{ts,js}"],
-    entities: ["src/Models/Entities/**/*.{ts,js}"],
-})
+    migrations: ['src/Migrations/**/*.{ts,js}'],
+    entities: ['src/Models/Entities/**/*.{ts,js}'],
+});
+
+connectionSource
+    .initialize()
+    .then(() => logger.info('Connection to database established'))
+    .catch((error) => logger.error('TypeORM connection error: ', error));

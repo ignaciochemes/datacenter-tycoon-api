@@ -18,7 +18,7 @@ export class Company extends GenericEntity {
     @Column({ nullable: true, length: 255 })
     public description: string;
 
-    @Column({ type: 'datetime', nullable: true, name: 'registration_date' })
+    @Column({ type: 'timestamp', nullable: true, name: 'registration_date' })
     public registrationDate: Date;
 
     @Column({ default: 1500, nullable: true })
